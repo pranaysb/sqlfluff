@@ -24,3 +24,17 @@ PROPERTIES(
     "dynamic_partition.prefix" = "p",
     "dynamic_partition.buckets" = "10"
 );
+
+CREATE TABLE example_db.fixed_range_partition
+(
+    id INT
+)
+ENGINE=olap
+DUPLICATE KEY(id)
+PARTITION BY RANGE(id)
+(
+    PARTITION p1 VALUES (("1"), ("10")),
+    PARTITION p2 VALUES (("10"), ("20"))
+)
+DISTRIBUTED BY HASH(id);
+
